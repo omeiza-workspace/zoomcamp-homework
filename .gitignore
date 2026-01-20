@@ -209,3 +209,4 @@ __marimo__/
 ny_taxi_postgres_data
 *.parquet
 .venv
+trash
