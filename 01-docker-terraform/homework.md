@@ -24,7 +24,7 @@ What's the version of `pip` in the image?
 - 24.3.1
 - 24.2.1
 - 23.3.1
-
+### Answer: 25.3
 
 ## Question 2. Understanding Docker networking and docker-compose
 
@@ -69,6 +69,7 @@ volumes:
 - db:5432
 
 If multiple answers are correct, select any 
+### Answer: db:5432
 
 
 ## Prepare the Data
@@ -90,9 +91,18 @@ wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_z
 For the trips in November 2025 (lpep_pickup_datetime between '2025-11-01' and '2025-12-01', exclusive of the upper bound), how many trips had a `trip_distance` of less than or equal to 1 mile?
 
 - 7,853
-- 8,007
+- 8,007 
 - 8,254
 - 8,421
+
+### Answer: 8007
+```sql 
+SELECT COUNT(*) AS trips_le_1_mile
+FROM green_taxi_trips
+WHERE "lpep_pickup_datetime" >= '2025-11-01'
+  AND "lpep_pickup_datetime" <  '2025-12-01'
+  AND "trip_distance" <= 1;
+  ```
 
 
 ## Question 4. Longest trip for each day
@@ -105,6 +115,24 @@ Use the pick up time for your calculations.
 - 2025-11-20
 - 2025-11-23
 - 2025-11-25
+### Answer : 2025-11-14
+```sql
+WITH daily_max_trips AS (
+    SELECT
+        DATE("lpep_pickup_datetime") AS pickup_day,
+        MAX("trip_distance") AS max_trip_distance
+    FROM green_taxi_trips
+    WHERE "trip_distance" < 100
+    GROUP BY DATE("lpep_pickup_datetime")
+)
+SELECT t.*
+FROM green_taxi_trips t
+JOIN daily_max_trips d
+  ON DATE(t."lpep_pickup_datetime") = d.pickup_day
+ AND t."trip_distance" = d.max_trip_distance
+ORDER BY d.max_trip_distance DESC
+LIMIT 1;
+```
 
 
 ## Question 5. Biggest pickup zone
@@ -115,6 +143,21 @@ Which was the pickup zone with the largest `total_amount` (sum of all trips) on 
 - East Harlem South
 - Morningside Heights
 - Forest Hills
+
+### Answer : East Harlem North
+```sql 
+SELECT
+    dz."Zone" AS pickup_zone,
+    SUM(t."total_amount") AS total_revenue
+FROM green_taxi_trips t
+JOIN taxi_zone_lookup z
+  ON t."PULocationID" = z."LocationID"
+WHERE t."lpep_pickup_datetime" >= '2025-11-18'
+  AND t."lpep_pickup_datetime" <  '2025-11-19'
+GROUP BY z."Zone"
+ORDER BY total_revenue DESC
+LIMIT 1;
+```
 
 
 ## Question 6. Largest tip
@@ -127,6 +170,24 @@ Note: it's `tip` , not `trip`. We need the name of the zone, not the ID.
 - Yorkville West
 - East Harlem North
 - LaGuardia Airport
+
+### Answer:  Upper East Side North
+```sql
+SELECT
+    dz."Zone" AS dropoff_zone,
+    SUM(t."tip_amount") AS total_tip
+FROM green_taxi_trips t
+JOIN taxi_zone_lookup pz
+  ON t."PULocationID" = pz."LocationID"
+JOIN taxi_zone_lookup dz
+  ON t."DOLocationID" = dz."LocationID"
+WHERE pz."Zone" = 'East Harlem North'
+  AND t."lpep_pickup_datetime" >= '2025-11-01'
+  AND t."lpep_pickup_datetime" <  '2025-12-01'
+GROUP BY dz."Zone"
+ORDER BY total_tip DESC
+LIMIT 1;
+```
 
 
 ## Terraform
@@ -154,6 +215,8 @@ Answers:
 - terraform init, terraform apply -auto-approve, terraform destroy
 - terraform import, terraform apply -y, terraform rm
 
+### Answer : 
+ - terraform init, terraform apply -auto-approve, terraform destroy
 
 ## Submitting the solutions
 
@@ -188,7 +251,7 @@ Just finished Module 1 - Docker & Terraform. Learned how to:
 ✅ Build data pipelines to ingest NYC taxi data
 ✅ Provision cloud infrastructure with Terraform
 
-Here's my homework solution: <LINK>
+Here's my homework solution: https://github.com/omeiza-workspace/zoomcamp-homework.git
 
 Following along with this amazing free course - who else is learning data engineering?
 
@@ -206,7 +269,7 @@ You can sign up here: https://github.com/DataTalksClub/data-engineering-zoomcamp
 - Terraform & GCP
 - NYC taxi data pipeline
 
-My solution: <LINK>
+My solution: https://github.com/omeiza-workspace/zoomcamp-homework.git
 
 Free course by @DataTalksClub: https://github.com/DataTalksClub/data-engineering-zoomcamp/
 ```
