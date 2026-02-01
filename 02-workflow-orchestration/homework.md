@@ -51,6 +51,15 @@ Answer: **green_tripdata_2020-04.csv**
 - 24,648,499
 - 18,324,219
 - 29,430,127
+```sql
+select 
+    count(1) 
+from 
+    `smiling-audio-448313-p0.de_zoomcamp.yellow_tripdata` 
+where 
+    filename like '%2020%';
+```
+Answer: **24,648,499**
 
 4) How many rows are there for the `Green` Taxi data for all CSV files in the year 2020?
 - 5,327,301
