@@ -158,10 +158,10 @@ It is best practice in Big Query to always cluster your data:
 ``` txt
 False
 
-When to Use Clustering
-When queries often filter or sort by specific columns.
-When the column used for clustering has low to medium cardinality (e.g., VendorID, PaymentType).
-When used together with partitioning for better optimization.
+Use Clustering when: 
+-  queries frequently filter or sort on specific columns.
+-  the clustering column has low to medium cardinality (for example, VendorID, PaymentType).
+- combined with partitioning to achieve better query performance and storage optimization.
 ```
 ## (Bonus: Not worth points) Question 9:
 No Points: Write a `SELECT count(*)` query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
