@@ -67,14 +67,9 @@ doubling the estimated bytes processed.
 - When selecting multiple columns, BigQuery performs an implicit join operation between them, increasing the estimated bytes processed
 
 ### Answer: 
-``` sql
--- 155.12 MB
-select PULocationID 
-from taxidata2024.taxidata_2024_01_06_materialised
-
--- 310.24 MB
-select PULocationID, DOLocationID
-from taxidata2024.taxidata_2024_01_06_materialised
+``` txt
+BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns (PULocationID, DOLocationID) requires 
+reading more data than querying one column (PULocationID), leading to a higher estimated number of bytes processed.
 ```
 
 ## Question 4:
