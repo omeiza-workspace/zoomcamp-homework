@@ -70,6 +70,8 @@ After completing Module 1, students gain hands-on experience with:
 - **Terraform**: Infrastructure as Code
 - **Kestra**: Workflow orchestration and automation
 - **Google Cloud Platform**: Cloud infrastructure provider
+- **BigQuery**: Cloud data warehouse for analytics
+- **dbt (data build tool)**: Analytics engineering and data transformations
 
 ### 📚 Module 2: Workflow Orchestration
 
@@ -115,13 +117,115 @@ The assignment demonstrates practical skills in:
 - Cloud-native data engineering
 - Automation and scheduling best practices
 
+### 📚 Module 3: Data Warehouse
+
+Module 3 covers modern **Data Warehousing** concepts using Google BigQuery:
+
+#### 🏢 Data Warehouse Fundamentals
+- Understanding OLTP vs OLAP systems and their use cases
+- Exploring BigQuery architecture and serverless data warehouse capabilities
+- Working with BigQuery's columnar storage and distributed processing
+- Understanding data warehouse design patterns and best practices
+
+#### 🗂️ Partitioning and Clustering
+- Implementing table partitioning for cost-effective querying (time-unit, integer range, ingestion time)
+- Configuring clustering to optimize data access patterns and improve query performance
+- Understanding the trade-offs between partitioning and clustering strategies
+- Best practices for optimizing BigQuery costs through intelligent data organization
+
+#### 📊 SQL for Analytics
+- Writing analytical SQL queries for business intelligence
+- Working with window functions for time-series analysis and running totals
+- Understanding data types and schema design for analytical workloads
+- Leveraging BigQuery's advanced SQL capabilities (ML functions, GIS, etc.)
+
+#### ☁️ BigQuery Architecture
+- Creating external tables from GCS parquet files
+- Understanding materialized vs external tables
+- Exploring BigQuery's columnar storage format and query optimization
+- Cost estimation and query performance analysis
+
+#### 🎯 Assignment Details
+
+**Module 3 Homework** includes:
+
+1. **BigQuery Architecture** - Understanding the internal workings of BigQuery's distributed system
+2. **Partitioning Strategies** - Implementing and optimizing table partitioning for the NYC taxi dataset
+3. **Cost Optimization** - Writing efficient queries that minimize data processing costs
+4. **Advanced SQL Analytics** - Answering complex business questions using window functions and aggregations
+5. **Performance Tuning** - Optimizing query performance through proper data organization
+
+The assignment demonstrates practical skills in:
+- Cloud data warehouse architecture and design
+- BigQuery optimization techniques
+- Cost-efficient data querying strategies
+- Advanced analytical SQL patterns
+
+### 📚 Module 4: Analytics Engineering
+
+Module 4 introduces **Analytics Engineering** using dbt (data build tool) for transforming data in the warehouse:
+
+#### 🔄 dbt Fundamentals
+- Understanding the analytics engineering workflow and the T in ELT
+- Setting up and configuring dbt projects with BigQuery integration
+- Working with dbt's version control and collaborative development features
+- Understanding the dbt DAG (Directed Acyclic Graph) for data lineage
+
+#### 🏗️ Data Modeling
+- Building staging models for raw data ingestion and initial transformations
+- Creating core/marts models for business logic and analytics-ready tables
+- Designing dimensional models with fact and dimension tables
+- Implementing star schema design patterns for the NYC taxi data
+
+#### ✅ Testing and Documentation
+- Writing data tests to ensure data quality and integrity
+- Creating custom tests for business-specific validation rules
+- Generating and maintaining data documentation with dbt docs
+- Understanding testing strategies for data warehouses
+
+#### 🧮 Advanced SQL Analytics
+- Computing quarterly revenue growth and Year-over-Year (YoY) comparisons
+- Working with continuous percentiles for fare analysis
+- Building complex analytical models with window functions
+- Handling time-series data and travel time calculations
+
+#### 📦 dbt Project Structure
+The `taxi_rides_ny` dbt project includes:
+- **Staging Models**: `stg_green_tripdata.sql`, `stg_yellow_tripdata.sql` - Clean and prepare raw data
+- **Core Models**:
+  - `fact_trips.sql` - Central fact table combining green and yellow taxi trips
+  - `dim_zones.sql` - Dimension table for taxi zones and boroughs
+  - `dim_monthly_zone_revenue.sql` - Aggregated revenue metrics by zone and month
+- **Seeds**: `taxi_zone_lookup.csv` - Static reference data for location mapping
+- **Macros**: Custom SQL functions for reusable transformations like `get_payment_type_description`
+
+#### 🎯 Assignment Details
+
+**Module 4 Homework** includes:
+
+1. **dbt Project Setup** - Configuring dbt with BigQuery and understanding project structure
+2. **Model Development** - Building staging and core models following best practices
+3. **Data Transformations** - Implementing business logic for trip metrics and revenue calculations
+4. **Testing Implementation** - Adding tests for data quality and schema validation
+5. **Documentation** - Creating comprehensive documentation for models and their relationships
+6. **Advanced Analytics** - Building quarterly revenue analysis and percentile calculations
+
+The assignment demonstrates practical skills in:
+- Analytics engineering workflow with dbt
+- Data modeling for analytics and BI
+- Data quality testing and validation
+- Collaborative data transformation practices
+- Advanced SQL for business analytics
+
 ### 📊 Dataset
 
 The assignments work with real-world **NYC Taxi and Limousine Commission** data:
 - **Module 1**: Green taxi trip records for November 2025
 - **Module 2**: Yellow and green taxi trip records for 2020-2021
+- **Module 3**: Yellow taxi data (January-June 2024) loaded into BigQuery for partitioning and clustering analysis
+- **Module 4**: Green, yellow, and FHV taxi data (2019-2020) for dbt transformations and analytics
 - Taxi zone lookup data for location analysis
-- Parquet and CSV file formats representing common data engineering scenarios
+- Parquet, CSV, and BigQuery table formats representing common data engineering scenarios
 
 ### 🎓 About Data Engineering Zoomcamp
 
@@ -146,5 +250,18 @@ To explore the Module 2 solution:
 2. Review the homework questions and answers in `homework.md`
 3. Examine the Kestra flow definitions and configurations
 4. Study the workflow patterns for data ingestion and backfill
+
+To explore the Module 3 solution:
+1. Navigate to the `03-data-warehouse/` directory
+2. Review the homework questions and answers in `homework.md`
+3. Examine the SQL queries and BigQuery optimization techniques
+4. Study the partitioning and clustering strategies for cost efficiency
+
+To explore the Module 4 solution:
+1. Navigate to the `04-analytics-engineering/taxi_rides_ny/` directory
+2. Review the homework questions and answers in `homework.md`
+3. Examine the dbt project structure, models, and configurations
+4. Review the staging models in `models/staging/` and core models in `models/core/`
+5. Study the tests, macros, and documentation setup in the dbt project
 
 This repository demonstrates practical implementation of data engineering concepts and serves as a learning resource for aspiring data engineers.
